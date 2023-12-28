@@ -29,19 +29,6 @@ def fillTestData():
             bookTypes.append(bookType)
             session.commit()
 
-        # Работники
-        for i in range(10):
-            first_name = choice(['Иван', 'Мария', 'Алексей', 'Елена'])
-            last_name = choice(['Иванов', 'Петрова', 'Сидоров', 'Смирнова'])
-            hire_date = choice([
-                '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
-                '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
-            worker = Worker(first_name=first_name, last_name=last_name, hire_date=hire_date,
-                            position=random.choice(positions).id)
-            workers.append(worker)
-            session.add(worker)
-            session.commit()  # Committing here to ensure that worker.id is set
-
         # Адрес библиотеки
         for i in range(5):
             name = choice(['Центральная', 'Перспективная', 'Слободская', 'Транспортная'])
@@ -52,6 +39,19 @@ def fillTestData():
             libraryAdresses.append(libraryAdress)
             session.add(libraryAdress)
             session.commit()
+
+        # Работники
+        for i in range(10):
+            first_name = choice(['Иван', 'Мария', 'Алексей', 'Елена'])
+            last_name = choice(['Иванов', 'Петрова', 'Сидоров', 'Смирнова'])
+            hire_date = choice([
+                '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
+                '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
+            worker = Worker(first_name=first_name, last_name=last_name, hire_date=hire_date,
+                            position=random.choice(positions).id, lib_adress=random.choice(libraryAdresses).id)
+            workers.append(worker)
+            session.add(worker)
+            session.commit()  # Committing here to ensure that worker.id is set
 
         # Читатели
         for i in range(10):
@@ -92,8 +92,7 @@ def fillTestData():
                 '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
                 '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
             return_date = choice([
-                '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
-                '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
+                '2023-01-01', '2020-02-15', '2020-03-10', None])
             session.add(
                 BookIssuance(book_id=book_id, reader_id=reader_id, issue_date=issue_date, return_date=return_date,
                              library_address_id=random.choice(libraryAdresses).id, worker_id=random.choice(workers).id))
@@ -114,6 +113,8 @@ def fillTestData():
             auth = Auth(worker_id=worker.id, login=login, password=password)
             session.add(auth)
 
+        session.add(Auth(worker_id=1, login="a", password="a"))
+        session.add(Auth(worker_id=1, login="ф", password="ф"))
         session.commit()
     except Exception as e:
         print("Error issuing the book:", e)

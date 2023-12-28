@@ -13,7 +13,7 @@ class Book(Base):
     title = Column(String(200))
     author = Column(String)
     release_date = Column(DateTime)
-    genre = ForeignKey('genres.id')
+    genre = Column(Integer, ForeignKey('genres.id'))
     book_type = Column(Integer, ForeignKey('book_types.id'))
 
 
@@ -53,6 +53,7 @@ class Worker(Base):
     last_name = Column(String)
     hire_date = Column(DateTime)
     position = Column(Integer, ForeignKey('positions.id'))
+    lib_adress = Column(Integer, ForeignKey('library_addresses.id'))
 
 
 # Таблица "Адрес библиотеки"
