@@ -4,6 +4,7 @@ from PyQt5.QtCore import QSize, QDate, Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QDateTimeEdit, QComboBox, QPushButton
 
 from services.BookService import get_all_genres, get_all_book_types, add_book
+from services.ReaderService import get_all_workers, get_all_positions, updete_position
 
 
 def add_book_window(widget):
@@ -55,13 +56,6 @@ def add_book_window(widget):
                                 book_type.id)  # Здесь второй аргумент - это данные, связанные с элементом
     layout.addWidget(book_type_combo)
 
-    # Получаем выбранные значения жанра и типа книги
-    selected_genre_index = genre_combo.currentData()
-    selected_genre_data = genre_combo.itemData(selected_genre_index, role=Qt.UserRole)
-
-    selected_book_type_index = book_type_combo.currentData()
-    selected_book_type_data = book_type_combo.itemData(selected_book_type_index, role=Qt.UserRole)
-
     success_label = QLabel()
     layout.addWidget(success_label)
     # Кнопка для добавления книги
@@ -72,6 +66,52 @@ def add_book_window(widget):
         release_date_edit,
         genres[genre_combo.currentIndex()].id,  # Получаем ID выбранного жанра
         book_types[book_type_combo.currentIndex()].id,  # Получаем ID выбранного типа книги
+        success_label
+    ))
+    layout.addWidget(button)
+
+    # Добавляем кнопку для закрытия окна
+    buttonClose = QPushButton('Закрыть')
+    from ui.MainUi import show_welcome_window
+    buttonClose.clicked.connect(lambda: show_welcome_window(reader_window))
+    layout.addWidget(buttonClose)
+
+    widget.hide()
+    reader_window.exec_()  # Открываем окно book_dialog
+
+
+def change_worker_posision_window(widget):
+    reader_window = QDialog(widget)  # Устанавливаем родительское окно
+    layout = QVBoxLayout(reader_window)
+
+    reader_window.setFixedSize(QSize(200, 180))
+
+    workers = get_all_workers()
+    bt_label = QLabel('Выберите сотрудника:')
+    layout.addWidget(bt_label)
+
+    worker_combo = QComboBox()
+    for worker in workers:
+        fio = worker.last_name + ' ' + worker.first_name
+        worker_combo.addItem(fio, worker.id)  # Здесь второй аргумент - это данные, связанные с элементом
+    layout.addWidget(worker_combo)
+
+    positions = get_all_positions()
+    bt_label = QLabel('Выберите новую роль сотрудника:')
+    layout.addWidget(bt_label)
+
+    position_combo = QComboBox()
+    for position in positions:
+        position_combo.addItem(position.position, position.id)  # Здесь второй аргумент - это данные, связанные с элементом
+    layout.addWidget(position_combo)
+
+    button = QPushButton('Изменить роль')
+
+    success_label = QLabel()
+    layout.addWidget(success_label)
+    button.clicked.connect(lambda:  updete_position(
+        workers[worker_combo.currentIndex()],
+        positions[position_combo.currentIndex()],
         success_label
     ))
     layout.addWidget(button)

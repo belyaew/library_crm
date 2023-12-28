@@ -15,11 +15,11 @@ def fillTestData():
     try:
 
         # Позиция работника
-        for i in range(10):
+        for i in ['Администратор', 'Менеджер', 'Библиотекарь']:
             if i == 0:
                 position_choise = 'Администратор'
             else:
-                position_choise = choice(['Менеджер', 'Администратор', 'Библиотекарь'])
+                position_choise = i
             position = Position(position=position_choise)
             positions.append(position)
             session.add(position)
