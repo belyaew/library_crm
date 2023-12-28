@@ -1,5 +1,4 @@
 import sqlalchemy
-from sqlalchemy import create_engine
 
 from orm.database import engine
 from orm.entity import Auth

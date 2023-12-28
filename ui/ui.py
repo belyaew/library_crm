@@ -1,7 +1,4 @@
-import sys
-
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, \
-    QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
 
 from services.BookService import add_book
 from ui.AuthUi import LoginWidget

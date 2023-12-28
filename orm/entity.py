@@ -1,7 +1,7 @@
 from datetime import datetime
+
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
 from orm.database import Base
 
@@ -95,6 +95,7 @@ class BookType(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+
 class Auth(Base):
     __tablename__ = 'auth'
     id = Column(Integer, primary_key=True)
@@ -102,6 +103,3 @@ class Auth(Base):
     login = Column(String)
     # todo Сделать шифратор
     password = Column(String)
-
-
-

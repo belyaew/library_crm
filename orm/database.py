@@ -11,22 +11,6 @@ Base = declarative_base()
 Base.metadata.create_all(engine)
 
 
-# Функция для выдачи книги читателю
-def issue_book(book_id, reader_id, return_date):
-    session = get_session()
-    try:
-        from orm.entity import BookIssuance
-        issuance = BookIssuance(book_id=book_id, reader_id=reader_id, return_date=return_date)
-        session.add(issuance)
-        session.commit()
-        print("Book issued successfully")
-    except Exception as e:
-        print("Error issuing the book:", e)
-        session.rollback()
-    finally:
-        session.close()
-
-
 # Функции для работы с базой данных
 def create_tables():
     # Создание таблиц, если они не существуют

@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QApplication, QDialog
 from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel
 
 from services.AuthService import check_credentials
 from ui.MainUi import show_welcome_window
@@ -23,7 +23,7 @@ class LoginWidget(QWidget):
         # Заменяем введённый логин на звездочки в UI
         self.password_line_edit.setEchoMode(QLineEdit.EchoMode.Password)
 
-        #Для нажатия enter
+        # Для нажатия enter
         self.login.returnPressed.connect(self.check_credentials_internal)
         self.password_line_edit.returnPressed.connect(self.check_credentials_internal)
 

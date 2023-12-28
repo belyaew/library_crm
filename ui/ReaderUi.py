@@ -1,10 +1,9 @@
 from datetime import datetime
 
-from PyQt5.QtCore import QSize, Qt, QDate
+from PyQt5.QtCore import QSize, QDate
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QListWidget, QWidget, QHBoxLayout, QLabel, QPushButton, \
     QListWidgetItem, QComboBox, QDateEdit
 
-from orm.entity import Subscription
 from services.ReaderService import get_all_readers, get_all_subscriptions, handle_add_subscription, update_subscription
 
 

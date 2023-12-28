@@ -110,7 +110,7 @@ def fillTestData():
             expiration_date = choice([
                 '2020-01-01', '2021-02-15', '2022-03-10', '2024-04-25', '2025-05-12'])
             session.add(Subscription(subscription_type=subscription_type, expiration_date=expiration_date,
-                        reader_id=random.choice(readers).id))
+                                     reader_id=random.choice(readers).id))
 
         # Создаем учётные записи и связываем их с работниками
         for worker in workers:

@@ -1,10 +1,25 @@
+from datetime import datetime
 from sqlite3 import IntegrityError
 
 from orm.database import get_session
 from orm.entity import Book, BookIssuance, Genre, BookType
-from datetime import datetime
 
 session = get_session()
+
+
+def issue_book(book_id, reader_id, return_date):
+    session = get_session()
+    try:
+        from orm.entity import BookIssuance
+        issuance = BookIssuance(book_id=book_id, reader_id=reader_id, return_date=return_date)
+        session.add(issuance)
+        session.commit()
+        print("Book issued successfully")
+    except Exception as e:
+        print("Error issuing the book:", e)
+        session.rollback()
+    finally:
+        session.close()
 
 
 # Функция для добавления книги
@@ -54,8 +69,10 @@ def issuance_book(book_id, reader_id, worker_id, library_address_id):
     finally:
         session.close()
 
+
 def get_all_genres():
     return session.query(Genre).all()
+
 
 def get_all_book_types():
     return session.query(BookType).all()

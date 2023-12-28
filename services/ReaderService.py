@@ -47,6 +47,7 @@ def update_subscription(reader, subscription_type, expiration_date, sub):
 def get_all_workers():
     return session.query(Worker).all()
 
+
 def get_all_positions():
     return session.query(Position).all()
 

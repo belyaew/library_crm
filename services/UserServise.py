@@ -1,5 +1,5 @@
 from orm.database import get_session
-from orm.entity import Worker, LibraryAddress, Auth, Position
+from orm.entity import Worker, Auth, Position
 
 session = get_session()
 

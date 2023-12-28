@@ -1,10 +1,6 @@
-from datetime import datetime
-
-from PyQt5.QtCore import QSize, QDateTime, QDate
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QListWidget, QListWidgetItem, QMessageBox, \
-    QWidget, QHBoxLayout, QDateEdit
-
-from orm.database import get_session, issue_book
+from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QListWidget, QListWidgetItem, QWidget, \
+    QHBoxLayout
 
 from services.BookService import get_issuance_records, get_all_books, get_book_type, get_genre_by_id, issuance_book
 from services.ReaderService import get_all_readers
@@ -79,7 +75,7 @@ def show_issuance_book_window(book):
 
     # Отображаем данные книги
     label = QLabel(f"{book.title} | {book.author} | {book.release_date} | {get_genre_by_id(book.genre)} |"
-                            f" {get_book_type(book.book_type)}")
+                   f" {get_book_type(book.book_type)}")
     layout.addWidget(label)
 
     # Отображаем список пользователей
@@ -89,7 +85,8 @@ def show_issuance_book_window(book):
         user_layout = QHBoxLayout(user_widget)
 
         # Добавляем имя пользователя
-        user_label = QLabel(f"{reader.first_name} | {reader.last_name} | {reader.birth_date} | {reader.email} | {reader.address}")
+        user_label = QLabel(
+            f"{reader.first_name} | {reader.last_name} | {reader.birth_date} | {reader.email} | {reader.address}")
         user_layout.addWidget(user_label)
 
         # Устанавливаем пользовательский виджет в QListWidgetItem
@@ -107,9 +104,8 @@ def show_issuance_book_window(book):
 
     book_dialog.exec_()
 
+
 def issuance_book_internal(book, reader, book_dialog):
-   from ui.MainUi import login
-   issuance_book(book.id, reader.id, get_worker_id_by_login(login), get_lib_id_by_login(login))
-   show_books_window(book_dialog)
-
-
+    from ui.MainUi import login
+    issuance_book(book.id, reader.id, get_worker_id_by_login(login), get_lib_id_by_login(login))
+    show_books_window(book_dialog)

@@ -1,5 +1,3 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
-
 from orm.TestData import fillTestData
 from orm.database import create_tables, drop_tables
 from ui.ui import create_ui

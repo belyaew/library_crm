@@ -1,6 +1,4 @@
-from datetime import datetime
-
-from PyQt5.QtCore import QSize, QDate, Qt
+from PyQt5.QtCore import QSize, QDate
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QDateTimeEdit, QComboBox, QPushButton
 
 from services.BookService import get_all_genres, get_all_book_types, add_book
@@ -102,14 +100,15 @@ def change_worker_posision_window(widget):
 
     position_combo = QComboBox()
     for position in positions:
-        position_combo.addItem(position.position, position.id)  # Здесь второй аргумент - это данные, связанные с элементом
+        position_combo.addItem(position.position,
+                               position.id)  # Здесь второй аргумент - это данные, связанные с элементом
     layout.addWidget(position_combo)
 
     button = QPushButton('Изменить роль')
 
     success_label = QLabel()
     layout.addWidget(success_label)
-    button.clicked.connect(lambda:  updete_position(
+    button.clicked.connect(lambda: updete_position(
         workers[worker_combo.currentIndex()],
         positions[position_combo.currentIndex()],
         success_label
