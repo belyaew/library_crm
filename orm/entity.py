@@ -14,7 +14,7 @@ class Book(Base):
     author = Column(String)
     release_date = Column(DateTime)
     genre = ForeignKey('genres.id')
-    book_type = Column(String)  # например, "твердый переплет", "мягкий переплет", "комиксы", "манга"
+    book_type = Column(Integer, ForeignKey('book_types.id'))
 
 
 # Таблица "Читатели"
@@ -52,7 +52,7 @@ class Worker(Base):
     first_name = Column(String)
     last_name = Column(String)
     hire_date = Column(DateTime)
-    position = Column(String)
+    position = Column(Integer, ForeignKey('positions.id'))
 
 
 # Таблица "Адрес библиотеки"
@@ -75,7 +75,7 @@ class Genre(Base):
 class Position(Base):
     __tablename__ = 'positions'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    position = Column(String)
 
 
 # Таблица "Подписки"
@@ -93,10 +93,6 @@ class BookType(Base):
     __tablename__ = 'book_types'
     id = Column(Integer, primary_key=True)
     name = Column(String)
-
-    book_id = Column(Integer, ForeignKey('books.id'))
-    book = relationship("Book")
-
 
 class Auth(Base):
     __tablename__ = 'auth'
