@@ -16,15 +16,18 @@ def fillTestData():
 
         # Позиция работника
         for i in range(10):
-            position_choise = choice(['Менеджер', 'Администратор', 'Библиотекарь'])
+            if i == 0:
+                position_choise = 'Администратор'
+            else:
+                position_choise = choice(['Менеджер', 'Администратор', 'Библиотекарь'])
             position = Position(position=position_choise)
             positions.append(position)
             session.add(position)
 
         # BookType
-        for i in range(7):
-            name = choice(['Твердый переплет', 'Мягкий переплет', 'Манта', 'Дорама', 'ранобэ', 'Газета', 'Комиксы'])
-            bookType = BookType(name=name)
+        btypes = ['Твердый переплет', 'Мягкий переплет', 'Манта', 'Дорама', 'ранобэ', 'Газета', 'Комиксы']
+        for bt in btypes:
+            bookType = BookType(name=bt)
             session.add(bookType)
             bookTypes.append(bookType)
             session.commit()
@@ -42,13 +45,17 @@ def fillTestData():
 
         # Работники
         for i in range(10):
+            if i == 0:
+                pos = 1
+            else:
+                pos = random.choice(positions).id
             first_name = choice(['Иван', 'Мария', 'Алексей', 'Елена'])
             last_name = choice(['Иванов', 'Петрова', 'Сидоров', 'Смирнова'])
             hire_date = choice([
                 '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
                 '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
             worker = Worker(first_name=first_name, last_name=last_name, hire_date=hire_date,
-                            position=random.choice(positions).id, lib_adress=random.choice(libraryAdresses).id)
+                            position=pos, lib_adress=random.choice(libraryAdresses).id)
             workers.append(worker)
             session.add(worker)
             session.commit()  # Committing here to ensure that worker.id is set
@@ -69,9 +76,9 @@ def fillTestData():
             session.commit()
 
         # Жанр
-        for i in range(10):
-            name = choice(['Фантастика', 'Детектив', 'Роман', 'Поэзия', 'Драма'])
-            session.add(Genre(name=name))
+        genres = ['Фантастика', 'Детектив', 'Роман', 'Поэзия', 'Драма']
+        for genre in genres:
+            session.add(Genre(name=genre))
 
         # Книги
         for i in range(50):
@@ -98,11 +105,10 @@ def fillTestData():
                              library_address_id=random.choice(libraryAdresses).id, worker_id=random.choice(workers).id))
 
         # Подписки
-        for i in range(20):
+        for i in range(10):
             subscription_type = choice(['ежемесячная', 'ежегодная'])
             expiration_date = choice([
-                '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
-                '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
+                '2020-01-01', '2021-02-15', '2022-03-10', '2024-04-25', '2025-05-12'])
             session.add(Subscription(subscription_type=subscription_type, expiration_date=expiration_date,
                         reader_id=random.choice(readers).id))
 

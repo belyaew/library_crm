@@ -10,8 +10,6 @@ class LoginWidget(QWidget):
         super().__init__(parent)
         self.layout = QVBoxLayout(self)
 
-        self.setFixedSize(QSize(800, 800))
-
         self.label = QLabel('Введите имя пользователя:')
         self.login = QLineEdit()
         self.password_line_edit = QLineEdit()
@@ -22,6 +20,9 @@ class LoginWidget(QWidget):
         self.layout.addWidget(self.password_line_edit)
         self.layout.addWidget(self.push_button)
 
+        # Заменяем введённый логин на звездочки в UI
+        self.password_line_edit.setEchoMode(QLineEdit.EchoMode.Password)
+
         #Для нажатия enter
         self.login.returnPressed.connect(self.check_credentials_internal)
         self.password_line_edit.returnPressed.connect(self.check_credentials_internal)
@@ -29,7 +30,7 @@ class LoginWidget(QWidget):
         self.push_button.clicked.connect(self.check_credentials_internal)
 
         self.setLayout(self.layout)
-        self.setFixedSize(QSize(300, 200))
+        self.setFixedSize(QSize(300, 140))
 
     def check_credentials_internal(self):
         result = check_credentials(self.login.text(), self.password_line_edit.text())
@@ -37,3 +38,4 @@ class LoginWidget(QWidget):
             show_welcome_window(self)
         else:
             self.push_button.setText('Неверные учетные данные')
+            self.push_button.setStyleSheet("color: red;")

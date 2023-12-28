@@ -8,12 +8,13 @@ session = get_session()
 
 
 # Функция для добавления книги
-def add_book(title, author, category_id):
+def add_book(title, author, release_date, genre, book_type, success_label):
     try:
-        book = Book(title=title, author=author, release_date=datetime.now(), book_type='Манга')
+        release_date = release_date.date().toPyDate()  # Преобразуем объект QDateTime в объект datetime
+        book = Book(title=title, author=author, release_date=release_date, genre=genre, book_type=book_type)
         session.add(book)
         session.commit()
-        print("Book added successfully")
+        success_label.setText("Книга успешно добавлена")
     except IntegrityError:
         session.rollback()
         print("Error: Invalid author_id or category_id")
@@ -52,3 +53,9 @@ def issuance_book(book_id, reader_id, worker_id, library_address_id):
         raise RuntimeError("Ошибка при выдачи книги")
     finally:
         session.close()
+
+def get_all_genres():
+    return session.query(Genre).all()
+
+def get_all_book_types():
+    return session.query(BookType).all()
