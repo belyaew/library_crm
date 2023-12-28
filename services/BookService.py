@@ -22,8 +22,11 @@ def add_book(title, author, category_id):
 
 
 def get_issuance_records():
-    return session.query(BookIssuance).filter(BookIssuance.return_date.is_(None) |
-                                              (BookIssuance.return_date < datetime.now())).all()
+    try:
+        return session.query(BookIssuance).filter(BookIssuance.return_date.is_(None) |
+                                                  (BookIssuance.return_date < datetime.now())).all()
+    finally:
+        session.commit()
 
 
 def get_all_books():

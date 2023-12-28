@@ -8,6 +8,7 @@ def show_welcome_window(login_widget):
     welcome_dialog = QDialog(login_widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(welcome_dialog)
 
+    global login
     login = login_widget.login.text()
 
     label = QLabel('Добро пожаловать, {}!'.format(login))

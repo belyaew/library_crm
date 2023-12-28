@@ -8,7 +8,7 @@ from orm.database import get_session, issue_book
 
 from services.BookService import get_issuance_records, get_all_books, get_book_type, get_genre_by_id, issuance_book
 from services.ReaderService import get_all_readers
-from services.UserServise import get_lib_name_by_login
+from services.UserServise import get_worker_id_by_login, get_lib_id_by_login
 
 
 def show_books_window(widget):
@@ -17,7 +17,8 @@ def show_books_window(widget):
 
     book_dialog.setFixedSize(QSize(1600, 1600))
 
-    label = QLabel('Список книг для пользователя: {}'.format(widget.login.text()))
+    from ui.MainUi import login
+    label = QLabel('Список книг для пользователя: {}'.format(login))
     layout.addWidget(label)
 
     # Получаем список книг из базы данных
@@ -105,14 +106,14 @@ def show_issuance_book_window(book):
 
     # Добавляем кнопку "Выдать"
     issue_button = QPushButton('Выдать')
-    issue_button.clicked.connect(lambda: issuance_book_internal())
+    issue_button.clicked.connect(lambda: issuance_book_internal(book, reader, book_dialog))
     layout.addWidget(issue_button)
 
     book_dialog.exec_()
 
-    def issuance_book_internal():
-        from ui.MainUi import login
-        issuance_book(book.id, reader.id, login, get_lib_name_by_login(login))
-        show_books_window(book_dialog)
+def issuance_book_internal(book, reader, book_dialog):
+   from ui.MainUi import login
+   issuance_book(book.id, reader.id, get_worker_id_by_login(login), get_lib_id_by_login(login))
+   show_books_window(book_dialog)
 
 
