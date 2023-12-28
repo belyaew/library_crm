@@ -12,10 +12,13 @@ from services.UserServise import get_worker_id_by_login, get_lib_id_by_login
 
 
 def show_books_window(widget):
+    global book_dialog
+    if 'book_dialog' in globals():  # проверяем, существует ли уже окно book_dialog
+        book_dialog.close()
     book_dialog = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(book_dialog)
 
-    book_dialog.setFixedSize(QSize(1600, 1600))
+    book_dialog.setFixedSize(QSize(900, 900))
 
     from ui.MainUi import login
     label = QLabel('Список книг для пользователя: {}'.format(login))
@@ -38,13 +41,13 @@ def show_books_window(widget):
                             f" {get_book_type(book.book_type)}")
         book_layout.addWidget(book_label)
 
-        if book.id not in [record.book_id for record in issuance_records]:
+        if book.id in [record.book_id for record in issuance_records]:
             issued_label = QLabel('Выдано')
             issued_label.setStyleSheet("color: red;")
             book_layout.addWidget(issued_label)
         else:
             issue_button = QPushButton('Выдать')
-            issue_button.clicked.connect(lambda: show_issuance_book_window(book))
+            issue_button.clicked.connect(lambda checked, b=book: show_issuance_book_window(b))
             book_layout.addWidget(issue_button)
 
         # Устанавливаем пользовательский виджет в QListWidgetItem
