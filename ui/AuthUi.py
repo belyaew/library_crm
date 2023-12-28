@@ -10,6 +10,7 @@ class LoginWidget(QWidget):
         super().__init__(parent)
         self.layout = QVBoxLayout(self)
 
+        self.setWindowTitle("Авторизация")
         self.label = QLabel('Введите имя пользователя:')
         self.login = QLineEdit()
         self.password_line_edit = QLineEdit()

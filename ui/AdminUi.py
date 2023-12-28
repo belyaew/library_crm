@@ -9,6 +9,8 @@ def add_book_window(widget):
     reader_window = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(reader_window)
 
+    reader_window.setWindowTitle("Админ панель")
+
     reader_window.setFixedSize(QSize(450, 350))
 
     # Отображаем форму для добавления книги
@@ -81,6 +83,8 @@ def add_book_window(widget):
 def change_worker_posision_window(widget):
     reader_window = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(reader_window)
+
+    reader_window.setWindowTitle("Админ панель")
 
     reader_window.setFixedSize(QSize(200, 180))
 

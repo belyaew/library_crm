@@ -14,6 +14,8 @@ def show_books_window(widget):
     book_dialog = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(book_dialog)
 
+    book_dialog.setWindowTitle("Меню книг")
+
     book_dialog.setFixedSize(QSize(900, 900))
 
     label = QLabel('Список доступных книг')
@@ -66,6 +68,8 @@ def show_books_window(widget):
 def show_issuance_book_window(book):
     book_dialog = QDialog()  # Создаем новое окно
     layout = QVBoxLayout(book_dialog)
+
+    book_dialog.setWindowTitle("Меню выдачи книг")
 
     # Устанавливаем размеры главного окна
     book_dialog.setFixedSize(QSize(800, 600))

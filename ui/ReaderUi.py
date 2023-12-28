@@ -14,6 +14,8 @@ def show_reader_window(widget):
     reader_window = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(reader_window)
 
+    reader_window.setWindowTitle("Читатели")
+
     reader_window.setFixedSize(QSize(900, 900))
 
     # Получаем список пользователей из базы данных
@@ -72,6 +74,8 @@ def show_reader_window(widget):
 def make_a_sub(reader, sub):
     reader_dialog = QDialog()  # Создаем новое окно
     layout = QVBoxLayout(reader_dialog)
+
+    reader_window.setWindowTitle("Оформление подписки")
 
     # Устанавливаем размеры главного окна
     reader_dialog.setFixedSize(QSize(300, 130))

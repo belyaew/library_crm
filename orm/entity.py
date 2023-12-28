@@ -11,7 +11,7 @@ class Book(Base):
     __tablename__ = 'books'
     id = Column(Integer, primary_key=True)
     title = Column(String(200))
-    author = Column(String)
+    author = Column(String(200))
     release_date = Column(DateTime)
     genre = Column(Integer, ForeignKey('genres.id'))
     book_type = Column(Integer, ForeignKey('book_types.id'))
@@ -21,11 +21,11 @@ class Book(Base):
 class Reader(Base):
     __tablename__ = 'readers'
     id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
+    first_name = Column(String(200))
+    last_name = Column(String(200))
     birth_date = Column(DateTime)
     email = Column(String(120), index=True, unique=True)
-    address = Column(String)
+    address = Column(String(200))
 
 
 # Таблица "Выданные книги"
@@ -49,8 +49,8 @@ class BookIssuance(Base):
 class Worker(Base):
     __tablename__ = 'worker'
     id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
+    first_name = Column(String(200))
+    last_name = Column(String(200))
     hire_date = Column(DateTime)
     position = Column(Integer, ForeignKey('positions.id'))
     lib_adress = Column(Integer, ForeignKey('library_addresses.id'))
@@ -60,23 +60,23 @@ class Worker(Base):
 class LibraryAddress(Base):
     __tablename__ = 'library_addresses'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    city = Column(String)
-    address = Column(String)
+    name = Column(String(200))
+    city = Column(String(200))
+    address = Column(String(200))
 
 
 # Таблица "Жанр"
 class Genre(Base):
     __tablename__ = 'genres'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String(200))
 
 
 # Таблица "Позиция работника"
 class Position(Base):
     __tablename__ = 'positions'
     id = Column(Integer, primary_key=True)
-    position = Column(String)
+    position = Column(String(200))
 
 
 # Таблица "Подписки"
@@ -84,7 +84,7 @@ class Subscription(Base):
     __tablename__ = 'subscriptions'
     id = Column(Integer, primary_key=True)
     reader_id = Column(Integer, ForeignKey('readers.id'))
-    subscription_type = Column(String)  # например, "ежемесячная", "ежегодная"
+    subscription_type = Column(String(200))  # например, "ежемесячная", "ежегодная"
     expiration_date = Column(DateTime)
 
     reader = relationship("Reader")
@@ -93,13 +93,13 @@ class Subscription(Base):
 class BookType(Base):
     __tablename__ = 'book_types'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
+    name = Column(String(200))
 
 
 class Auth(Base):
     __tablename__ = 'auth'
     id = Column(Integer, primary_key=True)
     worker_id = Column(Integer, ForeignKey('worker.id'))
-    login = Column(String)
+    login = Column(String(200))
     # todo Сделать шифратор
-    password = Column(String)
+    password = Column(String(200))

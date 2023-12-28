@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 # Создание подключения к базе данных
 # Подставить свой коннект к бд
 # engine = create_engine('jdbc:postgresql://localhost:5433/library_crm')
-engine = create_engine('postgresql://user:admin@localhost:5433/library_crm')
+engine = create_engine('mysql+mysqlconnector://root:0204@localhost:3306/library_crm')
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 Base.metadata.create_all(engine)
