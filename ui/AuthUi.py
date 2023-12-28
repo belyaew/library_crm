@@ -1,0 +1,33 @@
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QPushButton, QLabel, QApplication, QDialog
+from PyQt5.QtCore import QSize
+
+from services.AuthService import check_credentials
+from ui.MainUi import show_welcome_window
+
+
+class LoginWidget(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.layout = QVBoxLayout(self)
+
+        self.label = QLabel('Введите имя пользователя:')
+        self.login = QLineEdit()
+        self.password_line_edit = QLineEdit()
+        self.push_button = QPushButton('Проверить')
+
+        self.layout.addWidget(self.label)
+        self.layout.addWidget(self.login)
+        self.layout.addWidget(self.password_line_edit)
+        self.layout.addWidget(self.push_button)
+
+        self.push_button.clicked.connect(self.check_credentials_internal)
+
+        self.setLayout(self.layout)
+        self.setFixedSize(QSize(300, 200))
+
+    def check_credentials_internal(self):
+        result = check_credentials(self.login.text(), self.password_line_edit.text())
+        if result:
+            show_welcome_window(self)
+        else:
+            self.push_button.setText('Неверные учетные данные')
