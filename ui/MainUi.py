@@ -10,13 +10,8 @@ global login
 
 
 def show_welcome_window(login_widget):
-    global welcome_dialog
-    if 'welcome_dialog' in globals():  # проверяем, существует ли уже окно book_dialog
-        welcome_dialog.close()
-
     welcome_dialog = QDialog(login_widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(welcome_dialog)
-    welcome_dialog.setWindowTitle("Главное меню")
 
     welcome_dialog.setFixedSize(QSize(450, 200))
     global login

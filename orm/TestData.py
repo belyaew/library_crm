@@ -2,7 +2,7 @@ import random
 from random import choice
 
 from orm.database import get_session
-from orm.entity import Reader, Book, BookIssuance, Worker, LibraryAddress, Genre, BookType, Auth, Subscription, Position
+from orm.entity import Reader, Book, BookIssuance, Worker, LibraryAddress, Isbn, BookType, Auth, Subscription, Position
 
 
 def fillTestData():
@@ -25,7 +25,7 @@ def fillTestData():
             session.add(position)
 
         # BookType
-        btypes = ['Твердый переплет', 'Мягкий переплет', 'Манта', 'Дорама', 'ранобэ', 'Газета', 'Комиксы']
+        btypes = ['Печатная', 'Электронная']
         for bt in btypes:
             bookType = BookType(name=bt)
             session.add(bookType)
@@ -44,13 +44,13 @@ def fillTestData():
             session.commit()
 
         # Работники
-        for i in range(10):
+        for i in range(2):
             if i == 0:
                 pos = 1
             else:
                 pos = random.choice(positions).id
-            first_name = choice(['Иван', 'Мария', 'Алексей', 'Елена'])
-            last_name = choice(['Иванов', 'Петрова', 'Сидоров', 'Смирнова'])
+            first_name = choice(['Иван', 'Алексей', 'Александр'])
+            last_name = choice(['Иванов', 'Петров', 'Сидоров', 'Смирнов'])
             hire_date = choice([
                 '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
                 '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
@@ -76,24 +76,81 @@ def fillTestData():
             session.commit()
 
         # Жанр
-        genres = ['Фантастика', 'Детектив', 'Роман', 'Поэзия', 'Драма']
-        for genre in genres:
-            session.add(Genre(name=genre))
+        isbns = ['979-5-9222-0976-3', '978-5-9221-0979-5', '978-5-7038-3447-4', '5-87210-056-6', '5-271-01118-7']
+        isbns_entity = []
+        for isbn in isbns:
+            create_isbns = Isbn(name=isbn)
+            isbns_entity.append(create_isbns)
+            session.add(create_isbns)
+            session.commit()
 
         # Книги
-        for i in range(50):
-            title = choice(['Книга 1', 'Книга 2', 'Книга 3', 'Книга 4', 'Книга 5'])
-            author = choice(['Автор 1', 'Автор 2', 'Автор 3', 'Автор 4', 'Автор 5'])
-            release_date = choice([
-                '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
-                '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
-            genre_id = choice([i for i in range(1, 6)])
-            session.add(Book(title=title, author=author, release_date=release_date, genre=genre_id,
-                             book_type=random.choice(bookTypes).id))
+        # for i in range(50):
+        #     title = choice(['Книга 1', 'Книга 2', 'Книга 3', 'Книга 4', 'Книга 5'])
+        #     author = choice(['Автор 1', 'Автор 2', 'Автор 3', 'Автор 4', 'Автор 5'])
+        #     release_date = choice([
+        #         '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',
+        #         '2020-06-26', '2020-07-13', '2020-08-28', '2020-09-15', '2020-10-03'])
+        #     isbn_id = choice([i for i in range(1, 6)])
+        #     session.add(Book(title=title, author=author, release_date=release_date, isbn=isbn_id,
+        #                      book_type=random.choice(bookTypes).id))
+
+        session.add(Book(title='Сборник задач по линейной алгебре: учебник для вузов',
+                         author='И.В. Проскуряков',
+                         num_pub='Издание 7е',
+                         place_pub='"Наука" главная редакция физико-математической литературы',
+                         release_date='1984',
+                         publisher='Москва',
+                         page_count='336',
+                         isbn=isbns_entity[0].id,
+                         book_type=bookTypes[0].id))
+
+        session.add(Book(title='Курс аналитической геометрии и линейной алгебры:учебник для вузов',
+                         author='Д.В. Беклемишев',
+                         num_pub='Издание 12е',
+                         place_pub='ФИЗМАЛИТ',
+                         release_date='2008',
+                         publisher='Москва',
+                         page_count='312',
+                         isbn=isbns_entity[1].id,
+                         book_type=bookTypes[0].id))
+
+        session.add(Book(title='Учебник английского языка для студентов',
+                         author='И.В. Орловская',
+                         num_pub='Издание 11е',
+                         place_pub='Издательство МГТУ им Баумана',
+                         release_date='2010',
+                         publisher='Москва',
+                         page_count='447',
+                         isbn=isbns_entity[2].id,
+                         book_type=bookTypes[0].id))
+
+        session.add(Book(title='Россия в мировой истории',
+                         author='В.С. Порохня',
+                         num_pub='Издание 1е',
+                         place_pub='Издательство МАИ',
+                         release_date='2003',
+                         publisher='Смоленск',
+                         page_count='464',
+                         isbn=isbns_entity[3].id,
+                         book_type=bookTypes[0].id))
+
+        session.add(Book(title='Задачи и упражнения по математическому анализу: учебник для вузов',
+                         author='Б. П. Демидович',
+                         num_pub='Издание 1е',
+                         place_pub='Издательство Астрель',
+                         release_date='2001',
+                         publisher='Москва',
+                         page_count='495',
+                         isbn=isbns_entity[4].id,
+                         book_type=bookTypes[0].id))
+
+        session.commit()
 
         # Выданные книги
         for i in range(20):
-            book_id = choice([i for i in range(1, 51)])
+            # book_id = choice([i for i in range(1, 1)])  #ПОМЕНЯТЬ НА 6!!!!!!!
+            book_id = 1  #ПОМЕНЯТЬ НА 6!!!!!!!
             reader_id = random.choice(readers).id
             issue_date = choice([
                 '2020-01-01', '2020-02-15', '2020-03-10', '2020-04-25', '2020-05-12',

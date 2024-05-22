@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlite3 import IntegrityError
 
 from orm.database import get_session
-from orm.entity import Book, BookIssuance, Genre, BookType
+from orm.entity import Book, BookIssuance, Isbn, BookType
 
 session = get_session()
 
@@ -23,10 +23,11 @@ def issue_book(book_id, reader_id, return_date):
 
 
 # Функция для добавления книги
-def add_book(title, author, release_date, genre, book_type, success_label):
+def add_book(title, author, release_date, num_pub, place_pub, publisher, page_count, genre, book_type, success_label):
     try:
         release_date = release_date.date().toPyDate()  # Преобразуем объект QDateTime в объект datetime
-        book = Book(title=title, author=author, release_date=release_date, genre=genre, book_type=book_type)
+        book = Book(title=title, author=author, release_date=release_date, num_pub=num_pub, place_pub=place_pub,
+                    publisher=publisher, page_count=page_count,  isbn=genre, book_type=book_type)
         session.add(book)
         session.commit()
         success_label.setText("Книга успешно добавлена")
@@ -50,7 +51,7 @@ def get_all_books():
 
 
 def get_genre_by_id(genre_id):
-    return session.query(Genre).filter_by(id=genre_id).first().name
+    return session.query(Isbn).filter_by(id=genre_id).first().name
 
 
 def get_book_type(book_type_id):
@@ -71,7 +72,7 @@ def issuance_book(book_id, reader_id, worker_id, library_address_id):
 
 
 def get_all_genres():
-    return session.query(Genre).all()
+    return session.query(Isbn).all()
 
 
 def get_all_book_types():

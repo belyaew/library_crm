@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QListWidget, QListWidgetItem, QWidget, \
     QHBoxLayout
+import PyQt5.QtWidgets as QtWidgets
 
 from services.BookService import get_issuance_records, get_all_books, get_book_type, get_genre_by_id, issuance_book
 from services.ReaderService import get_all_readers
@@ -14,9 +15,7 @@ def show_books_window(widget):
     book_dialog = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(book_dialog)
 
-    book_dialog.setWindowTitle("Меню книг")
-
-    book_dialog.setFixedSize(QSize(900, 900))
+    book_dialog.setFixedSize(QSize(1400, 900))
 
     label = QLabel('Список доступных книг')
     layout.addWidget(label)
@@ -34,7 +33,9 @@ def show_books_window(widget):
         book_layout = QHBoxLayout(book_widget)
 
         # Добавляем название книги и автора
-        book_label = QLabel(f"{book.title} | {book.author} | {book.release_date} | {get_genre_by_id(book.genre)} |"
+        book_label = QLabel(f"{book.author} | {book.title} | {book.num_pub}  | {book.place_pub} |"
+                            f" {book.release_date} | {book.publisher} | {book.release_date}  | {book.page_count} | "
+                            f"{get_genre_by_id(book.isbn)} |"
                             f" {get_book_type(book.book_type)}")
         book_layout.addWidget(book_label)
 
@@ -43,7 +44,8 @@ def show_books_window(widget):
             issued_label.setStyleSheet("color: red;")
             book_layout.addWidget(issued_label)
         else:
-            issue_button = QPushButton('Выдать')
+            issue_button = QtWidgets.QPushButton('Выдать')
+            issue_button.setFixedSize(100, 30)
             issue_button.clicked.connect(lambda checked, b=book: show_issuance_book_window(b))
             book_layout.addWidget(issue_button)
 
@@ -69,8 +71,6 @@ def show_issuance_book_window(book):
     book_dialog = QDialog()  # Создаем новое окно
     layout = QVBoxLayout(book_dialog)
 
-    book_dialog.setWindowTitle("Меню выдачи книг")
-
     # Устанавливаем размеры главного окна
     book_dialog.setFixedSize(QSize(800, 600))
 
@@ -78,7 +78,7 @@ def show_issuance_book_window(book):
     readers = get_all_readers()
 
     # Отображаем данные книги
-    label = QLabel(f"{book.title} | {book.author} | {book.release_date} | {get_genre_by_id(book.genre)} |"
+    label = QLabel(f"{book.title} | {book.author} | {book.release_date} | {get_genre_by_id(book.isbn)} |"
                    f" {get_book_type(book.book_type)}")
     layout.addWidget(label)
 

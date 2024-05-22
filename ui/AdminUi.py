@@ -9,12 +9,10 @@ def add_book_window(widget):
     reader_window = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(reader_window)
 
-    reader_window.setWindowTitle("Админ панель")
-
-    reader_window.setFixedSize(QSize(450, 350))
+    reader_window.setFixedSize(QSize(1000, 1000))
 
     # Отображаем форму для добавления книги
-    author_label = QLabel('Автор книги:')
+    author_label = QLabel('ФИО автора:')
     layout.addWidget(author_label)
 
     author_edit = QLineEdit()
@@ -26,13 +24,31 @@ def add_book_window(widget):
     title_edit = QLineEdit()
     layout.addWidget(title_edit)
 
-    # Дата и время поля для ввода даты выпуска книги
-    release_date_label = QLabel('Дата выпуска:')
-    layout.addWidget(release_date_label)
+    num_pub_label = QLabel('Номер издания :')
+    layout.addWidget(num_pub_label)
+    num_pub_edit = QLineEdit()
+    layout.addWidget(num_pub_edit)
 
+    place_pub_label = QLabel('Место издания:')
+    layout.addWidget(place_pub_label)
+    place_pub_edit = QLineEdit()
+    layout.addWidget(place_pub_edit)
+
+    publisher_label = QLabel('Издатель:')
+    layout.addWidget(publisher_label)
+    publisher_edit = QLineEdit()
+    layout.addWidget(publisher_edit)
+
+    release_date_label = QLabel('Год издания:')
+    layout.addWidget(release_date_label)
     release_date_edit = QDateTimeEdit()
     release_date_edit.setDate(QDate.currentDate())
     layout.addWidget(release_date_edit)
+
+    page_count_label = QLabel('Количество страниц:')
+    layout.addWidget(page_count_label)
+    page_count_edit = QLineEdit()
+    layout.addWidget(page_count_edit)
 
     genres = get_all_genres()
     book_types = get_all_book_types()
@@ -42,7 +58,7 @@ def add_book_window(widget):
     book_type_combo = QComboBox()
 
     # Добавляем все жанры в список
-    genre_label = QLabel('Жанр:')
+    genre_label = QLabel('ISBN:')
     layout.addWidget(genre_label)
     for genre in genres:
         genre_combo.addItem(genre.name, genre.id)  # Здесь второй аргумент - это данные, связанные с элементом
@@ -64,8 +80,12 @@ def add_book_window(widget):
         title_edit.text(),
         author_edit.text(),
         release_date_edit,
+        num_pub_edit.text(),
+        place_pub_edit.text(),
+        publisher_edit.text(),
+        page_count_edit.text(),
         genres[genre_combo.currentIndex()].id,  # Получаем ID выбранного жанра
-        book_types[book_type_combo.currentIndex()].id,  # Получаем ID выбранного типа книги
+        book_types[book_type_combo.currentIndex()].id,# Получаем ID выбранного типа книги
         success_label
     ))
     layout.addWidget(button)
@@ -83,8 +103,6 @@ def add_book_window(widget):
 def change_worker_posision_window(widget):
     reader_window = QDialog(widget)  # Устанавливаем родительское окно
     layout = QVBoxLayout(reader_window)
-
-    reader_window.setWindowTitle("Админ панель")
 
     reader_window.setFixedSize(QSize(200, 180))
 
